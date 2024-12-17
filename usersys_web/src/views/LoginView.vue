@@ -58,11 +58,15 @@ export default {
             store.commit("updateToken", jwt_token);
             store.dispatch("getInfo", {
                 success() {
-                    if(store.state.user.role === "Publisher") {
-                        router.push({name: "Home"});
+                    if(store.state.user.role === "Seller") {
+                        router.push({name: "SellerInfo"});
                         store.commit("updatePullingInfo", false);
-                    }else {
-                        router.push({name: "docs_a"});
+                    }else if(store.state.user.role === "Customer") {
+                        router.push({name: "CustomerInfo"});
+                        store.commit("updatePullingInfo", false);
+                    }
+                    else {
+                        router.push({name: "AdminMain"});
                         store.commit("updatePullingInfo", false);
                     }
                     
@@ -84,10 +88,13 @@ export default {
             success() {
                 store.dispatch("getInfo", {
                     success() {
-                        if(store.state.user.role === "Publisher") {
-                            router.push({name: "Home"});
-                        } else {
-                            router.push({name: "docs_a"});
+                        if(store.state.user.role === "Seller") {
+                            router.push({name: "SellerInfo"});
+                        } else if(store.state.user.role === "Customer") {
+                            router.push({name: "CustomerInfo"});
+                        }
+                        else {
+                            router.push({name: "AdminMain"});
                         }
                     }
                 });

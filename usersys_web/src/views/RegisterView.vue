@@ -6,7 +6,7 @@
             </div>
             <div class="col-6">
                 <form  @submit.prevent="register">
-                    <h3>Welcome to Print System!</h3>
+                    <h3>Welcome to User System!</h3>
                     <div class="mb-3">
                         <div class="input-container">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -34,6 +34,20 @@
                         <input v-model="confirmedPassword" type="password" class="form-control" id="confirmedPassword" placeholder="ConfiremedPassword">
                         </div>    
                     </div>
+                    <div class="form-check d-flex">
+                        <div class="me-5">
+                            <input v-model="role" value="Seller" class="form-check-input" type="radio" name="userType" id="sellerrole">
+                            <label class="form-check-label" for="sellerrole">
+                                卖家
+                            </label>
+                        </div>
+                        <div>
+                            <input v-model="role" value="Customer"  class="form-check-input" type="radio" name="userType" id="customerrole" checked>
+                            <label class="form-check-label" for="customerrole">
+                                普通用户
+                            </label>
+                        </div>
+                    </div>
                     <div class="error-message">{{ error_message }}</div>
                     <div class="btn-container">
                         <button type="submit" class="btn btn-primary">注册</button>
@@ -58,16 +72,18 @@ export default {
         let username = ref('');
         let password = ref('');
         let confirmedPassword = ref('');
+        let role = ref('');
         let error_message = ref('');
 
         const register = () => {
             $.ajax({
-                url: "http://127.0.0.1:5000/user/register/",
+                url: "http://127.0.0.1:3000/user/register/",
                 type:"POST",
                 data: {
                     username: username.value,
                     password: password.value,
-                    confirmedPassword: confirmedPassword.value
+                    confirmedPassword: confirmedPassword.value,
+                    role: role.value,
                 },
                 success(resp) {
                     if(resp.error_message === "success") {
@@ -83,6 +99,7 @@ export default {
             username,
             password,
             confirmedPassword,
+            role,
             error_message,
             register,
         }

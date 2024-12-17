@@ -20,7 +20,7 @@ public class RegisterServiceImpl implements RegisterService {
   private PasswordEncoder passwordEncoder;
 
   @Override
-  public Map<String, String> register(String username, String password, String confirmedPassword) {
+  public Map<String, String> register(String username, String password, String confirmedPassword, String role) {
     Map <String, String> map = new HashMap<>();
     if(username == null) {
       map.put("error_message", "用户名不能为空");
@@ -60,8 +60,7 @@ public class RegisterServiceImpl implements RegisterService {
       return map;
     }
     String encodedPassword = passwordEncoder.encode(password);
-    String Role = "Publisher";
-    User user = new User(null, username, encodedPassword, Role);
+    User user = new User(null, username, encodedPassword, role);
     userMapper.insert(user);
     map.put("error_message", "success");
     return map;
